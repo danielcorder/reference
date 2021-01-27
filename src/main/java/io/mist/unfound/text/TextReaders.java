@@ -1,22 +1,20 @@
 package io.mist.unfound.text;
 
-//import org.junit.Assert;
-//import org.junit.Test;
-
 import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-//import static org.hamcrest.CoreMatchers.containsString;
-
 public class TextReaders {
 
-    public static void main(String[] args) {//readTextFromTxt(File readFile) {
+    public static void main(String[] args) {
 
         try {
             File textFile = new File("src/main/resources/striving.txt");
@@ -85,6 +83,7 @@ public class TextReaders {
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
