@@ -1,25 +1,30 @@
 package io.mist.unfound.db;
 
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class ConnectToDB {
+
+    // URL to connect to the database
+    private static final String dbUrl = "jdbc:sqlite:C:/sqlite/";
     /**
      * Connect to a sample database
      */
-    public static void connect() {
+    public static void connect(String fileName) {
+
+        String connectUrl = dbUrl + fileName;
         Connection conn = null;
         try {
-            // db parameters
-            String url = "jdbc:sqlite:C:/sqlite/chinook.db";
-            // create a connection to the database
-            conn = DriverManager.getConnection(url);
+            // Create a connection to the database
+            conn = DriverManager.getConnection(connectUrl);
 
             System.out.println("Connection to SQLite has been established.");
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+
         } finally {
             try {
                 if (conn != null) {
@@ -30,10 +35,32 @@ public class ConnectToDB {
             }
         }
     }
+
+    public static void createNewDatabase(String fileName) {
+
+        String fileUrl = dbUrl + fileName;
+        try (Connection conn = DriverManager.getConnection(fileUrl)) {
+
+            if (conn != null) {
+                DatabaseMetaData meta = conn.getMetaData();
+                System.out.println("The driver name is " + meta.getDriverName());
+                System.out.println("A new database has been created.");
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        connect();
+
+        String dbFile = "scratch.db";
+
+        createNewDatabase(dbFile);
+        connect(dbFile);
+
     }
 }
