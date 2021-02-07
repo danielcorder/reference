@@ -74,20 +74,20 @@ public class ConnectToDB {
         }
     }
 
-//    public void insert(String fileName, String name, double capacity) {
-//
-//        String fileUrl = dbUrl + fileName;
-//        String sql = "INSERT INTO warehouses(name,capacity) VALUES(?,?)";
-//
-//        try (Connection conn = this.connect();
-//             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-//            pstmt.setString(1, name);
-//            pstmt.setDouble(2, capacity);
-//            pstmt.executeUpdate();
-//        } catch (SQLException e) {
-//            System.out.println(e.getMessage());
-//        }
-//    }
+    public void insert(String fileName, String name, double capacity) {
+
+        String fileUrl = dbUrl + fileName;
+        String sql = "INSERT INTO warehouses(name,capacity) VALUES(?,?)";
+
+        try (Connection conn = this.connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, name);
+            pstmt.setDouble(2, capacity);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
 
     /**
      * @param args the command line arguments
