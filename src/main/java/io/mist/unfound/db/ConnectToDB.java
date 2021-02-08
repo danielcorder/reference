@@ -22,7 +22,9 @@ public class ConnectToDB {
             // Create a connection to the database
             conn = DriverManager.getConnection(connectUrl);
 
-            System.out.println("Connection to SQLite has been established.");
+            if (conn != null) {
+                System.out.println("Connection to SQLite has been established.");
+            }
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -59,10 +61,10 @@ public class ConnectToDB {
         String url = dbUrl + fileName;
 
         // SQL statement for creating a new table
-        String sql = "CREATE TABLE IF NOT EXISTS warehouses (\n"
+        String sql = "CREATE TABLE IF NOT EXISTS atable (\n"
                 + "	id integer PRIMARY KEY,\n"
                 + "	name text NOT NULL,\n"
-                + "	capacity real\n"
+                + "	price real\n"
                 + ");";
 
         try (Connection conn = DriverManager.getConnection(url);
@@ -74,15 +76,15 @@ public class ConnectToDB {
         }
     }
 
-    public void insert(String fileName, String name, double capacity) {
+    public void insert(String fileName, String name, double price) {
 
-        String fileUrl = dbUrl + fileName;
-        String sql = "INSERT INTO warehouses(name,capacity) VALUES(?,?)";
+        String url = dbUrl + fileName;
+        String sql = "INSERT INTO atable(name, price) VALUES(?,?)";
 
-        try (Connection conn = this.connect();
+        try (Connection conn = DriverManager.getConnection(url);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, name);
-            pstmt.setDouble(2, capacity);
+            pstmt.setDouble(2, price);
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -94,10 +96,17 @@ public class ConnectToDB {
      */
     public static void main(String[] args) {
 
+        ConnectToDB connect = new ConnectToDB();
+
         String dbFile = "scratch.db";
 
         createNewDatabase(dbFile);
         createNewTable(dbFile);
+        connect.insert(dbFile, "Last", 500);
+        connect.insert(dbFile, "First", 200);
+        connect.insert(dbFile, "Second", 800);
+        connect.insert(dbFile, "Ninth", 700);
+
         connect(dbFile);
 
     }

@@ -6,18 +6,28 @@ import org.apache.commons.csv.CSVRecord;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import java.util.Scanner;
 
 public class TextReaders {
 
     public static void main(String[] args) {
 
+        Properties props = System.getProperties();
+
         try {
-            File textFile = new File("src/main/resources/striving.txt");
+            props.store(new FileWriter("java.properties"),"Java system properties file");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            File textFile = new File("src/main/resources/textfile.txt");
             Scanner scanner = new Scanner(textFile);
 
             while (scanner.hasNextLine()) {
